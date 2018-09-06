@@ -6,12 +6,11 @@ require "purl/version"
 Gem::Specification.new do |spec|
   spec.name          = "purl"
   spec.version       = Purl::VERSION
-  spec.authors       = ["gkemmey"]
-  spec.email         = ["gray.kemmey@gmail.com"]
+  spec.authors       = ["the purl authors"]
 
   spec.summary       = 'Ruby library to parse and build "purl" aka. package URLs.'
   spec.description   = 'Ruby library to parse and build "purl" aka. package URLs. This is a microlibrary implementing the purl spec at https://github.com/package-url'
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/package-url/packageurl-ruby"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
