@@ -13,7 +13,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (~> 1.10)
   minitest (~> 5.0)
   purl!
   rake (~> 10.0)

@@ -22,11 +22,11 @@ module Purl
     end
 
     def scheme
-      @uri.scheme&.downcase
+      @uri.scheme.try(:downcase)
     end
 
     def type
-      @uri.host&.downcase
+      @uri.host.try(:downcase)
     end
 
     def namespace
@@ -45,9 +45,9 @@ module Purl
       if type == 'nuget' # not in the spec, but in the tests: 'nuget names are case sensitive'
         name_and_version.split("@").first
       elsif type == 'pypi' # from spec: downcased, and '_' converted to '-'
-        name_and_version.split("@").first&.downcase&.gsub('_', '-')
+        name_and_version.split("@").first.try(:downcase).try(:gsub, '_', '-')
       else
-        name_and_version.split("@").first&.downcase
+        name_and_version.split("@").first.try(:downcase)
       end
     end
 
@@ -57,11 +57,11 @@ module Purl
     end
 
     def qualifiers
-      @uri.query.nil? ? @uri.query : URI::decode_www_form(@uri.query.downcase).to_h # to_h bit > 2.1
+      @uri.query.nil? ? @uri.query : Hash[URI::decode_www_form(@uri.query.downcase)]
     end
 
     def subpath
-      @uri.fragment&.gsub(/^\/|\/$/, '')&.downcase # strip leading or trailing '/'
+      @uri.fragment.try(:gsub, /^\/|\/$/, '').try(:downcase) # strip leading or trailing '/'
     end
 
     def to_s(format = nil)
@@ -113,4 +113,8 @@ module Purl
       Generic.new(string)
     end
   end
+end
+
+if !defined?(ActiveSupport)
+  require "purl/monkey_patches/object/try"
 end
