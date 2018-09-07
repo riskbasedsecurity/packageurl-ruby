@@ -81,6 +81,26 @@ module Purl
       end
     end
 
+    # TODO - not an exhaustive list, pulled from test data
+    [
+      :arch,
+      :classifier,
+      :distro,
+      :extension,
+      :platform,
+      :repository_url
+    ].each do |supported_qualifier|
+      class_eval <<-CODE, __FILE__, __LINE__ + 1
+        def #{supported_qualifier}                           # def arch
+          qualifiers && qualifiers["#{supported_qualifier}"] #   qualifiers && qualifiers["arch"]
+        end                                                  # end
+
+        def #{supported_qualifier}?                          # def arch?
+          !!#{supported_qualifier}                           #   !!arch
+        end                                                  # end
+      CODE
+    end
+
     private
 
       def validates_scheme
