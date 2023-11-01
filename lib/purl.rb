@@ -72,7 +72,7 @@ module Purl
         partial = [partial, version].compact.join("@")
         partial = [
                     partial,
-                    qualifiers.nil? ? qualifiers : URI.unescape(URI.encode_www_form(qualifiers))
+                    qualifiers.nil? ? qualifiers : CGI.unescape(URI.encode_www_form(qualifiers))
                   ].compact.join("?")
 
         [partial, subpath].compact.join("#")
@@ -116,7 +116,7 @@ module Purl
           raise InvalidPurlError.new('type cannot start with a number')
         end
 
-        if !type =~ /^[a-zA-Z0-9\.\+\-]+$/
+        if !(type =~ /^[a-zA-Z0-9\.\+\-]+$/)
           raise InvalidPurlError.new("type can only be composed of ASCII letters and numbers, '.', '+' and '-' (period, plus, and dash)")
         end
       end
